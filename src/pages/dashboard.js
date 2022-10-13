@@ -45,8 +45,8 @@ export default function Dashboard({ watched, tracking, favorites }) {
           <ul className={styles.shows}>
             {favorites.map(show => {
               return (
-                <li>
-                  <img src={show.image.medium} alt={`${show.name} Poster`} />
+                <li key={show.id}>
+                  <Image width="300" height="422" src={show.image.medium} alt={`${show.name} Poster`} />
                   <h3 className={styles.showsTitle}>{ show.name }</h3>
                 </li>
               )
@@ -62,8 +62,8 @@ export default function Dashboard({ watched, tracking, favorites }) {
           <ul className={styles.shows}>
             {tracking.map(show => {
               return (
-                <li>
-                  <img src={show.image.medium} alt={`${show.name} Poster`} />
+                <li key={show.id}>
+                  <Image width="300" height="422" src={show.image.medium} alt={`${show.name} Poster`} />
                   <h3 className={styles.showsTitle}>{ show.name }</h3>
                 </li>
               )
@@ -79,8 +79,8 @@ export default function Dashboard({ watched, tracking, favorites }) {
           <ul className={styles.shows}>
             {watched.map(show => {
               return (
-                <li>
-                  <img src={show.image.medium} alt={`${show.name} Poster`} />
+                <li key={show.id}>
+                  <Image width="300" height="422" src={show.image.medium} alt={`${show.name} Poster`} />
                   <h3 className={styles.showsTitle}>{ show.name }</h3>
                 </li>
               )

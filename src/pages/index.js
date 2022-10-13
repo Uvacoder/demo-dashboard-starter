@@ -27,8 +27,8 @@ export default function Home({ shows }) {
           <ul className={styles.shows}>
             {shows.map(show => {
               return (
-                <li>
-                  <img src={show.image.medium} alt={`${show.name} Poster`} />
+                <li key={show.id}>
+                  <Image width="300" height="295" src={show.image.medium} alt={`${show.name} Poster`} />
                   <h3 className={styles.showsTitle}>{ show.name }</h3>
                 </li>
               )
