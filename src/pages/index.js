@@ -1,4 +1,3 @@
-import { promises as fs } from 'fs';
 import Head from 'next/head';
 import Image from 'next/image';
 
@@ -7,9 +6,12 @@ import Section from '@components/Section';
 import Container from '@components/Container';
 import Button from '@components/Button';
 
+// Show data from https://www.tvmaze.com/api
+import shows from '@data/shows';
+
 import styles from '../styles/Home.module.scss';
 
-export default function Home({ shows }) {
+export default function Home({ popular }) {
   return (
     <Layout>
       <Head>
@@ -25,10 +27,10 @@ export default function Home({ shows }) {
           <h2 className={styles.heading}>Popular Shows</h2>
 
           <ul className={styles.shows}>
-            {shows.map(show => {
+            {popular.map(show => {
               return (
                 <li key={show.id}>
-                  <Image width="300" height="295" src={show.image.medium} alt={`${show.name} Poster`} />
+                  <Image width="300" height="422" src={show.image.medium} alt={`${show.name} Poster`} />
                   <h3 className={styles.showsTitle}>{ show.name }</h3>
                 </li>
               )
@@ -55,16 +57,9 @@ export default function Home({ shows }) {
 }
 
 export async function getStaticProps() {
-  // Show data from https://www.tvmaze.com/api
-  const location = './src/data';
-  const files = await fs.readdir(location);
-  const shows = await Promise.all(files.map(async filename =>{
-    const data = await fs.readFile(`${location}/${filename}`, { encoding: 'utf8' });
-    return JSON.parse(data);
-  }));
   return {
     props: {
-      shows: shows.sort(() => 0.5 - Math.random()).slice(0,4)
+      popular: shows.sort(() => 0.5 - Math.random()).slice(0,4)
     }
   }
 }

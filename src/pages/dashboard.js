@@ -1,10 +1,12 @@
-import { promises as fs } from 'fs';
 import Head from 'next/head';
 import Image from 'next/image';
 
 import Layout from '@components/Layout';
 import Section from '@components/Section';
 import Container from '@components/Container';
+
+// Show data from https://www.tvmaze.com/api
+import shows from '@data/shows';
 
 import styles from '../styles/Dashboard.module.scss';
 
@@ -46,8 +48,12 @@ export default function Dashboard({ watched, tracking, favorites }) {
             {favorites.map(show => {
               return (
                 <li key={show.id}>
-                  <Image width="300" height="422" src={show.image.medium} alt={`${show.name} Poster`} />
-                  <h3 className={styles.showsTitle}>{ show.name }</h3>
+                  <a href={show.url} rel="noopener noreferrer">
+                    <Image width="300" height="422" src={show.image.medium} alt={`${show.name} Poster`} />
+                  </a>
+                  <h3 className={styles.showsTitle}>
+                    <a href={show.url} rel="noopener noreferrer">{ show.name }</a>
+                  </h3>
                 </li>
               )
             })}
@@ -63,8 +69,12 @@ export default function Dashboard({ watched, tracking, favorites }) {
             {tracking.map(show => {
               return (
                 <li key={show.id}>
-                  <Image width="300" height="422" src={show.image.medium} alt={`${show.name} Poster`} />
-                  <h3 className={styles.showsTitle}>{ show.name }</h3>
+                  <a href={show.url} rel="noopener noreferrer">
+                    <Image width="300" height="422" src={show.image.medium} alt={`${show.name} Poster`} />
+                  </a>
+                  <h3 className={styles.showsTitle}>
+                    <a href={show.url} rel="noopener noreferrer">{ show.name }</a>
+                  </h3>
                 </li>
               )
             })}
@@ -80,8 +90,12 @@ export default function Dashboard({ watched, tracking, favorites }) {
             {watched.map(show => {
               return (
                 <li key={show.id}>
-                  <Image width="300" height="422" src={show.image.medium} alt={`${show.name} Poster`} />
-                  <h3 className={styles.showsTitle}>{ show.name }</h3>
+                  <a href={show.url} rel="noopener noreferrer">
+                    <Image width="300" height="422" src={show.image.medium} alt={`${show.name} Poster`} />
+                  </a>
+                  <h3 className={styles.showsTitle}>
+                    <a href={show.url} rel="noopener noreferrer">{ show.name }</a>
+                  </h3>
                 </li>
               )
             })}
@@ -93,13 +107,6 @@ export default function Dashboard({ watched, tracking, favorites }) {
 }
 
 export async function getServerSideProps() {
-  // Show data from https://www.tvmaze.com/api
-  const location = './src/data';
-  const files = await fs.readdir(location);
-  const shows = await Promise.all(files.map(async filename =>{
-    const data = await fs.readFile(`${location}/${filename}`, { encoding: 'utf8' });
-    return JSON.parse(data);
-  }));
   return {
     props: {
       watched: shows,
